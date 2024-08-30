@@ -1,0 +1,5 @@
+# alpha for 16 bit or magenta for palette
+-gT00FFFF
+# 16 bit bitmap
+-gB16
+-gb

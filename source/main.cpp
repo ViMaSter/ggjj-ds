@@ -1,51 +1,40 @@
-/*---------------------------------------------------------------------------------
-
-	$Id: main.cpp,v 1.13 2008-12-02 20:21:20 dovoto Exp $
-
-	Simple console print demo
-	-- dovoto
-
-
----------------------------------------------------------------------------------*/
 #include <nds.h>
 
 #include <stdio.h>
 
-volatile int frame = 0;
+// git adds a nice header we can include to access the data
+// this has the same name as the image
+#include "dan.h"
+#include "lobby.h"
 
-//---------------------------------------------------------------------------------
-void Vblank() {
-//---------------------------------------------------------------------------------
-	frame++;
-}
-	
-//---------------------------------------------------------------------------------
-int main(void) {
-//---------------------------------------------------------------------------------
-	touchPosition touchXY;
+int main(void)
+{
+    videoSetMode   ( MODE_5_2D );
 
-	irqSet(IRQ_VBLANK, Vblank);
+    vramSetBankA( VRAM_A_MAIN_BG );
+    vramSetBankB( VRAM_B_MAIN_BG  );
 
+    int bg3 = bgInit( 3, BgType_Bmp16, BgSize_B16_256x256, 5, 0 );
+    int bg2 = bgInit( 2, BgType_Bmp16, BgSize_B8_256x256, 0, 0 );
+
+	bgSetPriority(bg3,0);
+	bgSetPriority(bg2,1);
+
+	dmaCopy(lobbyBitmap, bgGetGfxPtr(bg2), lobbyBitmapLen);
+	dmaCopy(lobbyPal, BG_PALETTE, 256*2);
+	dmaCopy(danBitmap, bgGetGfxPtr(bg3), danBitmapLen);
+
+
+    videoSetModeSub( MODE_5_2D );
 	consoleDemoInit();
 
-	iprintf("      Hello DS dev'rs\n");
-	iprintf("     \x1b[32mwww.devkitpro.org\n");
-	iprintf("   \x1b[32;1mwww.drunkencoders.com\x1b[39m");
- 
+	iprintf("Please someone stop me,");
+	iprintf("\nbefore I have to deal\nwith pointers again.");
+
 	while(1) {
-	
 		swiWaitForVBlank();
 		scanKeys();
-		int keys = keysDown();
-		if (keys & KEY_START) break;
-
-		touchRead(&touchXY);
-
-		// print at using ansi escape sequence \x1b[line;columnH 
-		iprintf("\x1b[10;0HFrame = %d",frame);
-		iprintf("\x1b[16;0HTouch x = %04X, %04X\n", touchXY.rawx, touchXY.px);
-		iprintf("Touch y = %04X, %04X\n", touchXY.rawy, touchXY.py);		
-	
+		if (keysDown()&KEY_START) break;
 	}
 
 	return 0;
