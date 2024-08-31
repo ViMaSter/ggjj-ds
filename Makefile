@@ -21,6 +21,12 @@ DATA		:=
 INCLUDES	:=	include
 GRAPHICS	:=	data
 
+# These set the information text in the nds file
+GAME_ICON      := $(CURDIR)/../icon.bmp
+GAME_TITLE     := Game Grumps: Joint Justice
+GAME_SUBTITLE1 := Studio Lovelies
+GAME_SUBTITLE2 := studio-lovelies.com
+
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
