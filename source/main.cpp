@@ -28,8 +28,8 @@ int main(void)
     videoSetModeSub( MODE_5_2D );
 	consoleDemoInit();
 
-	iprintf("Please someone stop me,");
-	iprintf("\nbefore I have to deal\nwith pointers again.");
+	iprintf("No, this is not");
+	iprintf("\na confirmed DS port.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n...unless?");
 
 	while(1) {
 		swiWaitForVBlank();
