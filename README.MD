@@ -12,5 +12,5 @@ export DEVKITARM=/opt/devkitpro/devkitARM
 # build
 make
 # clean and rebuild
-rm -rf build/ && 
+rm -rf build/ && make
 ```
